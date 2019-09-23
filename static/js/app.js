@@ -7,10 +7,6 @@ var SI = d3.select(".SI");
 
 
 
-
-
-
-
  d3.csv("../data/Manhattan_911.csv", function(error, Mdata) {
   if (error) throw error;
 
@@ -34,39 +30,71 @@ var SI = d3.select(".SI");
      var trace1 = {
       x: Month,
       y: IncidentsNo,
-      name: 'No. of Incidents',
+      name: 'Incidents No.',
       type: 'bar',
       opacity: .5,
+      marker: {
+        color: 'rgb(0,133,66)',
+      },
+    
       
     };
     
     var trace2 = {
       x: Month,
       y: AvgResponseTimesMinutes,
-      name: 'Avg. Response Times In Minutes',
+      name: 'Response Times',
       yaxis: 'y2',
       mode: 'lines+markers',
       line: {
-          color: 'rgb(55, 128, 191)',
+          color: 'rgb(0,133,66)',
           width: 3,
           shape: 'spline',
-        }
+        },
+        marker: {
+          color: 'rgb(33,33,33)',
+      },
     };
     
     var data = [trace1, trace2];
 
     var layout = {
       title: 'NYC Ambulance and Fire Response Times to Life Threatening Emergencies',
-      yaxis: {title: 'No. of Life Threatening Medical Emergencies'},
+      xaxis: {showgrid: true,
+        showline: true,
+        zeroline: true,
+        zerolinecolor: '#969696',
+        zerolinewidth: 4,
+        mirror: 'ticks',
+        gridcolor: '#bdbdbd',
+        gridwidth: 1},
+      yaxis: {title: 'No. of Life Threatening Medical Emergencies',
+          range: [0, 12500],
+      showgrid: false,
+      showline: true,
+      mirror: 'ticks',
+      gridcolor: '#bdbdbd',
+      gridwidth: 1},
       yaxis2: {
         title: 'Avg. Response Time (Minutes)',
         titlefont: {color: 'rgb(148, 103, 189)'},
         tickfont: {color: 'rgb(148, 103, 189)'},
         overlaying: 'y',
         side: 'right',
+        range: [7.5, 10],
+          showgrid: true,
+          showline: true,
+          zeroline: true,
+          zerolinecolor: '#969696',
+          zerolinewidth: 4,
+          mirror: 'ticks',
+          gridcolor: '#bdbdbd',
+          gridwidth: 1,
       
       } , 
-      legend: {x:0, y:5, "orientation": "h"}     
+      legend: {x:0, y:5, "orientation": "h"} ,
+      showgrid: true,    
+      
     };
 
     Plotly.newPlot('plot', data, layout);
@@ -126,42 +154,95 @@ Manhattan.on("click", function() {
        var trace1 = {
         x: Month,
         y: IncidentsNo,
-        name: 'No. of Incidents',
+        name: 'Incidents No.',
         type: 'bar',
         opacity: .5,
+        marker: {
+        color: 'rgb(0,133,66)',
+        }
+      
+        
         
       };
       
       var trace2 = {
         x: Month,
         y: AvgResponseTimesMinutes,
-        name: 'Avg. Response Times In Minutes',
+        name: 'Response Times',
         yaxis: 'y2',
         mode: 'lines+markers',
         line: {
-            color: 'rgb(55, 128, 191)',
+            color: 'rgb(0,133,66)',
             width: 3,
             shape: 'spline',
-          }
+          },
+        marker: {
+            color: 'rgb(33,33,33)',
+        },
       };
       
       var data = [trace1, trace2];
 
       var layout = {
         title: 'NYC Ambulance and Fire Response Times to Life Threatening Emergencies',
-        yaxis: {title: 'No. of Life Threatening Medical Emergencies'},
+        hovermode: 'closest',
+        xaxis: {showgrid: true,
+                showline: true,
+                zeroline: true,
+                zerolinecolor: '#969696',
+                zerolinewidth: 4,
+                mirror: 'ticks',
+                gridcolor: '#bdbdbd',
+                gridwidth: 1},
+        yaxis: {title: 'No. of Life Threatening Medical Emergencies',
+                range: [0, 12500],
+                showgrid: false,
+                showline: true,
+                mirror: 'ticks',
+                gridcolor: '#bdbdbd',
+                gridwidth: 1},
         yaxis2: {
           title: 'Avg. Response Time (Minutes)',
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
           overlaying: 'y',
           side: 'right',
+          range: [7.5, 10],
+          showgrid: true,
+          showline: true,
+          zeroline: true,
+          zerolinecolor: '#969696',
+          zerolinewidth: 4,
+          mirror: 'ticks',
+          gridcolor: '#bdbdbd',
+          gridwidth: 1,
+                } , 
+        legend: {x:0, y:5, "orientation": "h"},
         
-        } , 
-        legend: {x:0, y:5, "orientation": "h"}     
-      };
+       
+      
 
-      Plotly.newPlot('plot', data, layout);
+      };
+    
+
+      // Plotly.newPlot('plot', data, layout);
+
+
+
+      Plotly.animate('plot', {
+        data: data,
+         //traces: [0],
+         layout: layout
+       }, {
+         transition: {
+           duration: 300000000,
+           easing: 'cubic-in-out'
+         },
+         frame: {
+           duration: 500
+         },
+         responsive: true,
+       })
   });
   
   
@@ -197,15 +278,16 @@ Manhattan.on("click", function() {
        console.log("IncentsNo", IncidentsNo);
        var AvgResponseTimesMinutes =  Qdata.map(data => data.AvgResponseTimesMinutes);
        console.log("AvgResponseTimesMinutes", AvgResponseTimesMinutes);
+       console.log("AvgResponseTimesMinutes0", AvgResponseTimesMinutes[0]);
        
        var trace1 = {
         x: Month,
         y: IncidentsNo,
-        name: 'No. of Incidents',
+        name: 'Incidents No.',
         type: 'bar',
         opacity: .5,
         marker:{
-            color: 'rgb(0,133,66)',
+            color: 'rgb(237,156,40)',
           },
         
       };
@@ -213,51 +295,83 @@ Manhattan.on("click", function() {
       var trace2 = {
         x: Month,
         y: AvgResponseTimesMinutes,
-        name: 'Avg. Response Times In Minutes',
+        name: 'Response Times',
         yaxis: 'y2',
         mode: 'lines+markers',
         line: {
-            color: 'rgb(0,133,66)',
+            color: 'rgb(237,156,40)',
             width: 3,
             shape: 'spline',
           }
       };
       
       var data = [trace1, trace2];
+      var data1 = [trace1];
+      var data2 = [trace2];
 
       var layout = {
         title: 'NYC Ambulance and Fire Response Times to Life Threatening Emergencies',
-        yaxis: {title: 'No. of Life Threatening Medical Emergencies'},
+        yaxis: {title: 'No. of Life Threatening Medical Emergencies',
+              range: [0, 11000] },
         yaxis2: {
           title: 'Avg. Response Time (Minutes)',
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
           overlaying: 'y',
           side: 'right',
-          range: [7, 10],
+          range: [7.5, 9.4],
         } , 
         legend: {x:0, y:5, "orientation": "h"}  
-                    };
+      };
 
-      //Plotly.animate('plot', data, layout);
 
+      var layout1 = {
+        title: 'NYC Ambulance and Fire Response Times to Life Threatening Emergencies',
+        yaxis: {title: 'No. of Life Threatening Medical Emergencies',
+              range: [0, 11000] },
+      };
+
+      var layout2 = {
+        yaxis2: {
+          title: 'Avg. Response Time (Minutes)',
+          titlefont: {color: 'rgb(148, 103, 189)'},
+          tickfont: {color: 'rgb(148, 103, 189)'},
+          overlaying: 'y',
+          side: 'right',
+          range: [7.5, 9.4],
+        } , 
+        legend: {x:0, y:5, "orientation": "h"},  
+      };
+
+      
+
+    //  // Plotly.animate('plot', data, layout);
       Plotly.animate('plot', {
-       data: data,
-        //traces: [0],
+        data: data,
+        //traces: data,
         layout: layout
       }, {
         transition: {
-          duration: 10000000,
-          easing: 'cubic-in-out'
+          duration: 300000000,
+          easing: 'cubic-in-out',
+          redraw: true,
         },
         frame: {
-          duration: 500
+          duration: 500,
         }
       })
 
 
+     
+     
+      //  Plotly.plot('plot', 
+      //  [{
+      //    y:[AvgResponseTimesMinutes[0]],
+      //    type: 'line+markers'
 
-  });
+      //  }]);
+
+    });
  
   });
 
@@ -293,11 +407,12 @@ Manhattan.on("click", function() {
        var trace1 = {
         x: Month,
         y: IncidentsNo,
-        name: 'No. of Incidents',
+        name: 'Incidents No.',
         type: 'bar',
         opacity: .5,
         marker:{
-            color: 'rgb(57,179,215)',
+            color: 'rgb(210,50,45)'
+           ,
           },
         
       };
@@ -305,11 +420,11 @@ Manhattan.on("click", function() {
       var trace2 = {
         x: Month,
         y: AvgResponseTimesMinutes,
-        name: 'Avg. Response Times In Minutes',
+        name: 'Response Times',
         yaxis: 'y2',
         mode: 'lines+markers',
         line: {
-            color: 'rgb(57,179,215)',
+            color: 'rgb(210,50,45)',
             width: 3,
             shape: 'spline',
           }
@@ -319,19 +434,35 @@ Manhattan.on("click", function() {
 
       var layout = {
         title: 'NYC Ambulance and Fire Response Times to Life Threatening Emergencies',
-        yaxis: {title: 'No. of Life Threatening Medical Emergencies'},
+        yaxis: {title: 'No. of Life Threatening Medical Emergencies',
+        range: [0, 12500]},
         yaxis2: {
           title: 'Avg. Response Time (Minutes)',
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
           overlaying: 'y',
           side: 'right',
+          range: [7.5, 10.3],
         
         } , 
         legend: {x:0, y:5, "orientation": "h"}     
       };
 
-      Plotly.newPlot('plot', data, layout);
+      // Plotly.newPlot('plot', data, layout);
+
+      Plotly.animate('plot', {
+        data: data,
+         //traces: [0],
+         layout: layout
+       }, {
+         transition: {
+           duration: 300000000,
+           easing: 'cubic-in-out'
+         },
+         frame: {
+           duration: 500
+         }
+       })
   });
  
   });
@@ -366,11 +497,11 @@ Manhattan.on("click", function() {
        var trace1 = {
         x: Month,
         y: IncidentsNo,
-        name: 'No. of Incidents',
+        name: 'Incidents No.',
         type: 'bar',
         opacity: .5,
         marker:{
-            color: 'rgb(237,156,40)',
+            color: 'rgb(66,139,202)',
           },
         
       };
@@ -378,11 +509,11 @@ Manhattan.on("click", function() {
       var trace2 = {
         x: Month,
         y: AvgResponseTimesMinutes,
-        name: 'Avg. Response Times In Minutes',
+        name: 'Response Times',
         yaxis: 'y2',
         mode: 'lines+markers',
         line: {
-            color: 'rgb(237,156,40)',
+            color: 'rgb(66,139,202)',
             width: 3,
             shape: 'spline',
           }
@@ -392,19 +523,36 @@ Manhattan.on("click", function() {
 
       var layout = {
         title: 'NYC Ambulance and Fire Response Times to Life Threatening Emergencies',
-        yaxis: {title: 'No. of Life Threatening Medical Emergencies'},
+        yaxis: {title: 'No. of Life Threatening Medical Emergencies',
+        range: [0, 15000]},
         yaxis2: {
           title: 'Avg. Response Time (Minutes)',
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
           overlaying: 'y',
           side: 'right',
+          range: [7.5, 9.1]
         
         } , 
         legend: {x:0, y:5, "orientation": "h"}     
       };
 
-      Plotly.newPlot('plot', data, layout);
+      // Plotly.newPlot('plot', data, layout);
+
+      
+      Plotly.animate('plot', {
+        data: data,
+         //traces: [0],
+         layout: layout
+       }, {
+         transition: {
+           duration: 300000000,
+           easing: 'cubic-in-out'
+         },
+         frame: {
+           duration: 500
+         }
+       })
   });
  
   });
@@ -438,11 +586,11 @@ SI.on("click", function() {
        var trace1 = {
         x: Month,
         y: IncidentsNo,
-        name: 'No. of Incidents',
+        name: 'Incidents No.',
         type: 'bar',
         opacity: .5,
         marker:{
-            color: 'rgb(210,50,45))',
+            color:  'rgb(57,179,215)',
           },
         
       };
@@ -450,11 +598,11 @@ SI.on("click", function() {
       var trace2 = {
         x: Month,
         y: AvgResponseTimesMinutes,
-        name: 'Avg. Response Times In Minutes',
+        name: 'Response Times',
         yaxis: 'y2',
         mode: 'lines+markers',
         line: {
-            color: 'rgb(210,50,45))',
+            color:  'rgb(57,179,215)',
             width: 3,
             shape: 'spline',
           }
@@ -464,19 +612,37 @@ SI.on("click", function() {
 
       var layout = {
         title: 'NYC Ambulance and Fire Response Times to Life Threatening Emergencies',
-        yaxis: {title: 'No. of Life Threatening Medical Emergencies'},
+        yaxis: {title: 'No. of Life Threatening Medical Emergencies',
+        range: [0, 2500]
+      },
         yaxis2: {
           title: 'Avg. Response Time (Minutes)',
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
           overlaying: 'y',
           side: 'right',
+          range: [6.5, 8.5]
         
         } , 
         legend: {x:0, y:5, "orientation": "h"}     
       };
 
-      Plotly.newPlot('plot', data, layout);
+      // Plotly.newPlot('plot', data, layout);
+
+      Plotly.animate('plot', {
+        data: data,
+         //traces: [0],
+         layout: layout
+       }, {
+         transition: {
+           duration: 300000000,
+           easing: 'linear-in-out'
+         },
+         frame: {
+           duration: 500
+         },
+         mode: 'afterall', 
+       })
   });
  
   });

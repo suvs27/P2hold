@@ -18,3 +18,10 @@
     font-size: 12px;
     line-height: 1.42857;
 }
+
+.modebar{
+    display: none !important;
+}
+
+
+tr:hover { background: yellow; }
